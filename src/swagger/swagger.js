@@ -6,9 +6,14 @@ const options = {
         info: {
             title: 'Finance Dashboard API',
             version: '1.0.0',
-            description: 'Backend API for Finance Dashboard',
+            description: 'Backend API for Finance Dashboard ',
         },
-        servers: [{ url: 'http://localhost:3000' }],
+        servers: [
+            {
+                url: 'http://localhost:3000',
+                description: 'Local Development Server'
+            }
+        ],
         components: {
             securitySchemes: {
                 bearerAuth: {
