@@ -14,14 +14,14 @@ const dashboardRoutes = require('./modules/dashboard/dashboard.routes');
 
 const app = express();
 
-// CORS — must come before helmet so preflight requests work
+
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Disable helmet entirely for Swagger UI routes so CSP doesn't block fetch/XHR
+
 app.use((req, res, next) => {
     if (req.path.startsWith('/api-docs')) {
         return next();
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-// Serve raw swagger JSON (useful for debugging)
+
 app.get('/api-docs.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);

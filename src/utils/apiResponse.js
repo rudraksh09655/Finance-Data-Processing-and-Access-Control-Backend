@@ -1,6 +1,3 @@
-// Consistent response shape across ALL endpoints
-// Every response will look the same — evaluators love this
-
 const success = (res, statusCode = 200, message = 'Success', data = null) => {
     return res.status(statusCode).json({
         success: true,
