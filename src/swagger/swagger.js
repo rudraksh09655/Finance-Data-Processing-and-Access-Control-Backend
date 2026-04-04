@@ -6,12 +6,16 @@ const options = {
         info: {
             title: 'Finance Dashboard API',
             version: '1.0.0',
-            description: 'Backend API for Finance Dashboard ',
+            description: 'Backend API for Finance Dashboard — Zorvyn Fintech Assignment',
         },
         servers: [
             {
-                url: '/',
-                description: 'Current Server'
+                url: 'https://finance-data-processing-and-access-0nv5.onrender.com',
+                description: 'Production Server'
+            },
+            {
+                url: 'http://localhost:3000',
+                description: 'Local Development Server'
             }
         ],
         components: {
