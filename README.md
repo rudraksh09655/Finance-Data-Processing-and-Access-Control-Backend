@@ -7,6 +7,16 @@ clear separation of concerns, and real-world backend engineering practices.
 
 ---
 
+## 🚀 Live Demo
+
+| | URL |
+|---|---|
+| **Live API** | https://finance-data-processing-and-access-0nv5.onrender.com |
+| **Swagger Docs** | https://finance-data-processing-and-access-0nv5.onrender.com/api-docs |
+| **Health Check** | https://finance-data-processing-and-access-0nv5.onrender.com/health |
+
+> **Note:** Hosted on Render free tier — first request may take 30-50 seconds to wake up. All subsequent requests will be instant.
+
 ## 📌 Table of Contents
 
 - [Overview](#overview)
