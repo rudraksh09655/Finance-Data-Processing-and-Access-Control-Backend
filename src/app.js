@@ -14,27 +14,39 @@ const dashboardRoutes = require('./modules/dashboard/dashboard.routes');
 
 const app = express();
 
-// Security
-app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com"],
-            styleSrc: ["'self'", "'unsafe-inline'", "unpkg.com"],
-            imgSrc: ["'self'", "data:", "unpkg.com"],
-            connectSrc: ["'self'", "http://localhost:3000"],
-        },
-    },
-    crossOriginEmbedderPolicy: false,
-}));
-
+// CORS — must come before helmet so preflight requests work
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+// Disable helmet entirely for Swagger UI routes so CSP doesn't block fetch/XHR
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api-docs')) {
+        return next();
+    }
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+                styleSrc: ["'self'", "'unsafe-inline'"],
+                imgSrc: ["'self'", "data:"],
+                connectSrc: ["'self'"],
+            },
+        },
+        crossOriginEmbedderPolicy: false,
+    })(req, res, next);
+});
+
 app.use(express.json());
+
+// Serve raw swagger JSON (useful for debugging)
+app.get('/api-docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
@@ -42,8 +54,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
         persistAuthorization: true,
         displayRequestDuration: true,
         tryItOutEnabled: true,
+        url: '/api-docs.json',
     },
     customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Finance Dashboard API Docs',
 }));
 
 // Health check

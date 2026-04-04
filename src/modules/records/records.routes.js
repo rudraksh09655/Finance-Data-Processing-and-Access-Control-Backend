@@ -38,6 +38,13 @@ const ctrl = require('./records.controller');
  *         name: limit
  *         schema:
  *           type: integer
+ *     responses:
+ *       200:
+ *         description: List of financial records
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied
  */
 router.get('/', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.getRecords);
 
@@ -55,6 +62,13 @@ router.get('/', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.getR
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       200:
+ *         description: Financial record found
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: Record not found
  */
 router.get('/:id', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.getRecordById);
 
@@ -89,6 +103,15 @@ router.get('/:id', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.g
  *               notes:
  *                 type: string
  *                 example: January salary
+ *     responses:
+ *       201:
+ *         description: Record created successfully
+ *       400:
+ *         description: Validation failed
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied - ADMIN only
  */
 router.post('/', authenticate, authorize('ADMIN'), validate(createRecordSchema), ctrl.createRecord);
 
@@ -106,6 +129,15 @@ router.post('/', authenticate, authorize('ADMIN'), validate(createRecordSchema),
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       200:
+ *         description: Record updated successfully
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied - ADMIN only
+ *       404:
+ *         description: Record not found
  */
 router.put('/:id', authenticate, authorize('ADMIN'), validate(updateRecordSchema), ctrl.updateRecord);
 
@@ -123,6 +155,15 @@ router.put('/:id', authenticate, authorize('ADMIN'), validate(updateRecordSchema
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       200:
+ *         description: Record deleted successfully
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied - ADMIN only
+ *       404:
+ *         description: Record not found
  */
 router.delete('/:id', authenticate, authorize('ADMIN'), ctrl.deleteRecord);
 

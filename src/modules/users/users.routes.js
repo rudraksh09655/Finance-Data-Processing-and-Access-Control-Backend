@@ -13,6 +13,13 @@ router.use(authenticate, authorize('ADMIN'));
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all users
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied - ADMIN only
  */
 router.get('/', ctrl.getAllUsers);
 
@@ -30,6 +37,13 @@ router.get('/', ctrl.getAllUsers);
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       200:
+ *         description: User found
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: User not found
  */
 router.get('/:id', ctrl.getUserById);
 
@@ -57,6 +71,13 @@ router.get('/:id', ctrl.getUserById);
  *               role:
  *                 type: string
  *                 enum: [VIEWER, ANALYST, ADMIN]
+ *     responses:
+ *       200:
+ *         description: Role updated successfully
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: User not found
  */
 router.patch('/:id/role', ctrl.updateUserRole);
 
@@ -84,6 +105,13 @@ router.patch('/:id/role', ctrl.updateUserRole);
  *               status:
  *                 type: string
  *                 enum: [ACTIVE, INACTIVE]
+ *     responses:
+ *       200:
+ *         description: Status updated successfully
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: User not found
  */
 router.patch('/:id/status', ctrl.updateUserStatus);
 
@@ -101,6 +129,13 @@ router.patch('/:id/status', ctrl.updateUserStatus);
  *         required: true
  *         schema:
  *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: User not found
  */
 router.delete('/:id', ctrl.deleteUser);
 

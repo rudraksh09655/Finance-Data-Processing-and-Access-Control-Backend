@@ -11,6 +11,11 @@ const ctrl = require('./dashboard.controller');
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Financial summary
+ *       401:
+ *         description: Not authenticated
  */
 router.get('/summary', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.getSummary);
 
@@ -28,6 +33,11 @@ router.get('/summary', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ct
  *         schema:
  *           type: integer
  *           example: 5
+ *     responses:
+ *       200:
+ *         description: Recent activity list
+ *       401:
+ *         description: Not authenticated
  */
 router.get('/recent', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctrl.getRecentActivity);
 
@@ -39,6 +49,13 @@ router.get('/recent', authenticate, authorize('ADMIN', 'ANALYST', 'VIEWER'), ctr
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Category breakdown
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied
  */
 router.get('/breakdown', authenticate, authorize('ADMIN', 'ANALYST'), ctrl.getCategoryBreakdown);
 
@@ -50,6 +67,13 @@ router.get('/breakdown', authenticate, authorize('ADMIN', 'ANALYST'), ctrl.getCa
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Monthly trends data
+ *       401:
+ *         description: Not authenticated
+ *       403:
+ *         description: Access denied
  */
 router.get('/trends', authenticate, authorize('ADMIN', 'ANALYST'), ctrl.getMonthlyTrends);
 
